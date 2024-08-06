@@ -1,0 +1,14 @@
+#This is an M code that extract the substring between 1st and 4th delimiter and replacing the inbetween delimiters by space
+
+= Table.AddColumn(#"Renamed Columns", "Custom", each let
+    Delimiter = "_",
+    String = "Your string",
+    GetSubstring = (text, delimiter, start, end) =>
+        let
+            SplitList = Text.Split(text, delimiter),
+            Substring = Text.Combine(List.Range(SplitList, start, end - start), " ")
+        in
+            Substring,
+    Result = GetSubstring(String, Delimiter, 1, 4)
+in
+    Result)
